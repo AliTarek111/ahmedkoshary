@@ -5,148 +5,465 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>احمد كشري | Ahmed Koshary</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="C:\Users\A\Desktop\New folder\favicon-16x16.png">
-  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=mobile" />
     <style>
         :root {
             --gold: #d4af37;
+            --gold-light: #f9d976;
             --dark-gold: #aa8928;
-            --black: #0f0f0f;
-            --soft-black: #1a1a1a;
+            --black: #050505;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(212, 175, 55, 0.2);
             --white: #ffffff;
         }
 
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
             background-color: var(--black);
             color: var(--white);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            perspective: 1000px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 450px;
-            padding: 40px 20px;
-            text-align: center;
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a1500 0%, #050505 80%);
+            overflow: hidden;
         }
 
-        /* صورة البروفايل */
-        .profile-img {
-            width: 110px;
-            height: 110px;
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
             border-radius: 50%;
-            border: 3px solid var(--gold);
-            padding: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            filter: blur(40px);
+            animation: moveGlow 10s infinite alternate ease-in-out;
         }
 
+        .glow:nth-child(2) {
+            top: 60%;
+            left: 20%;
+            animation-duration: 12s;
+            animation-delay: -5s;
+        }
+
+        .glow:nth-child(3) {
+            top: 20%;
+            left: 70%;
+            animation-duration: 15s;
+            animation-delay: -2s;
+        }
+
+        @keyframes moveGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, -100px) scale(1.5); }
+        }
+
+        /* Container Glassmorphism */
+        .container {
+            width: 90%;
+            max-width: 420px;
+            padding: 40px 30px;
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1) inset;
+            transform: translateY(30px) translateZ(0);
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes fadeUp {
+            to {
+                transform: translateY(0) translateZ(0);
+                opacity: 1;
+            }
+        }
+
+        /* Profile Image */
+        .profile-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 25px;
+            transform: translateZ(30px);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid transparent;
+            z-index: 2;
+            position: relative;
+            background-color: #111;
+        }
+
+        .profile-ring {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--gold), transparent 30%, var(--gold-light), transparent 70%);
+            z-index: 1;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Titles */
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--gold);
-            letter-spacing: 1px;
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-weight: 900;
+            transform: translateZ(40px);
         }
 
-        p {
-            font-size: 16px;
-            color: #ccc;
-            margin-bottom: 30px;
-        }
-
-        /* الروابط الأساسية */
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .link-card {
-            background: var(--soft-black);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 15px;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .link-card:hover {
-            background: var(--gold);
-            color: var(--black);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        /* أيقونات التواصل الاجتماعي */
-        .social-icons {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .social-icons a {
-            color: var(--white);
-            font-size: 24px;
-            transition: color 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: var(--gold);
-        }
-
-        /* تأثير ذهبي للنص */
         .golden-text {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa8e2c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        p.subtitle {
+            font-size: 16px;
+            color: #d1d1d1;
+            margin-bottom: 35px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transform: translateZ(30px);
+            background: #222;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.2);
+        }
+
+        /* Links */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transform: translateZ(20px);
+        }
+
+        .link-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--white);
+            padding: 16px 20px;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .link-card:nth-child(1) { animation-delay: 0.3s; }
+        .link-card:nth-child(2) { animation-delay: 0.4s; }
+        .link-card:nth-child(3) { animation-delay: 0.5s; }
+        .link-card:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transform: skewX(-25deg);
+            transition: all 0.6s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.3);
+            color: var(--gold-light);
+        }
+
+        .link-card:hover::before {
+            left: 150%;
+            transition: 0.6s ease;
+        }
+
+        .link-card i {
+            font-size: 22px;
+            color: var(--gold);
+            transition: transform 0.3s ease;
+        }
+
+        .link-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        /* Social Icons */
+        .social-icons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            transform: translateZ(25px);
+            animation: fadeIn 1s ease forwards 0.9s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            font-size: 24px;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .social-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        }
+
+        .social-btn:hover {
+            color: var(--black);
+            border-color: var(--gold);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .social-btn:hover::after {
+            transform: scale(1);
+        }
+
+        /* Particles cursor effect container */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="C:\Users\A\Desktop\unnamed - Copy.jpg" alt="Profile" class="profile-img">
+<!-- Animated Background -->
+<div class="bg-animation">
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+</div>
 
-    <h1 class="golden-text"> احمد كشري | Ahmed Koshary</h1>
-    <p>✨ســوفـــت ويـــر✨</p>
+<div class="container" id="card">
+    <div class="profile-container">
+        <div class="profile-ring"></div>
+        <img src="123.JPG" alt="Profile" class="profile-img">
+    </div>
+
+    <h1 class="golden-text">احمد كشري | Ahmed Koshary</h1>
+    <p class="subtitle">✨ ســوفـــت ويـــر ✨</p>
 
     <div class="links-container">
-        <a href="#" class="link-card">
-            <i class="fas fa-shopping-bag"></i> مشاهدة جميع المنتجات
+        <!--a href="#" class="link-card">
+            <i class="fas fa-shopping-bag"></i> 
+            <span>مشاهدة جميع المنتجات</span>
+            </a-->
+            <a href="tel:01141493535" class="link-card">
+               <i class="material-symbols-outlined">mobile</i> 
+               <span>تواصل معي مباشرة</span>
+           </a>
+        <!--a href="tel:01141493535" class="link-card">
+            <i class="fas fa-envelope"></i> 
+            <span>تواصل معي مباشرة</span>
+        </a-->
+        <!--a href="#" class="link-card">
+            <i class="fas fa-paper-plane"></i> 
+            <span>اشترك في النشرة البريدية</span>
         </a>
         <a href="#" class="link-card">
-            <i class="fas fa-envelope"></i> تواصل معي مباشرة
-        </a>
-        <a href="#" class="link-card">
-            <i class="fas fa-paper-plane"></i> اشترك في النشرة البريدية
-        </a>
-        <a href="#" class="link-card">
-            <i class="fas fa-globe"></i> موقعي الرسمي
-        </a>
+            <i class="fas fa-globe"></i> 
+            <span>موقعي الرسمي</span>
+        </a-->
+        
+
     </div>
 
     <div class="social-icons">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61584957774089" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/+201141493535" class="social-btn"><i class="fab fa-whatsapp"></i></a>
     </div>
 </div>
+
+<canvas id="particles"></canvas>
+
+<script>
+    // 3D Tilt Effect on the Card
+    const card = document.getElementById('card');
+    const container = document.body;
+    
+    container.addEventListener('mousemove', (e) => {
+        // Calculate dimensions
+        const yAxis = (window.innerWidth / 2 - e.pageX) / 30;
+        const xAxis = (window.innerHeight / 2 - e.pageY) / -30;
+        
+        card.style.transform = `translateY(0) rotateY(${yAxis}deg) rotateX(${xAxis}deg)`;
+    });
+
+    // Reset tilt on mouseleave
+    container.addEventListener('mouseleave', () => {
+        card.style.transform = `translateY(0) rotateY(0deg) rotateX(0deg)`;
+        card.style.transition = "transform 0.5s ease";
+    });
+
+    container.addEventListener('mouseenter', () => {
+        card.style.transition = "none";
+    });
+
+    // Simple cursor particles effect (Gold dust trailing mouse)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 4 + 1;
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
+            this.color = `rgba(212, 175, 55, ${Math.random()})`;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.size > 0.2) this.size -= 0.05;
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    window.addEventListener('mousemove', function(event) {
+        for (let i = 0; i < 3; i++) {
+            particlesArray.push(new Particle(event.x, event.y));
+        }
+    });
+
+    // Handle interactions on touch devices
+    window.addEventListener('touchmove', function(event) {
+        let touch = event.touches[0];
+        for (let i = 0; i < 3; i++) {
+            particlesArray.push(new Particle(touch.clientX, touch.clientY));
+        }
+    });
+
+    function handleParticles() {
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw();
+            if (particlesArray[i].size <= 0.2) {
+                particlesArray.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        handleParticles();
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+
+    // Resize canvas when window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
 
 </body>
 </html>
